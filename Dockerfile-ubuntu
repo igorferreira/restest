@@ -1,0 +1,23 @@
+FROM node:8
+
+MAINTAINER igorferreira.noorden@sulamerica.com.br
+
+ENV \
+  HOME=/app \
+  PATH=/app/bin:/app/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:$PATH
+
+USER root
+
+RUN mkdir -p ${HOME}
+
+COPY . ${HOME}
+
+WORKDIR ${HOME}
+
+RUN curl https://install.meteor.com/ | sh
+
+RUN meteor npm install
+
+EXPOSE 8080
+
+CMD npm start

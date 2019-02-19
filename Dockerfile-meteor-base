@@ -1,0 +1,20 @@
+# The tag here should match the Meteor version of your app, per .meteor/release
+FROM geoffreybooth/meteor-base:1.7.0.3
+
+MAINTAINER igorferreira.noorden@sulamerica.com.br
+
+ENV HOME=/opt/src 
+
+USER root
+
+RUN mkdir -p ${HOME}
+
+COPY . ${HOME}
+
+WORKDIR ${HOME}
+
+RUN meteor npm install
+
+EXPOSE 8080
+
+CMD npm start

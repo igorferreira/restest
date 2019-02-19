@@ -1,0 +1,33 @@
+sulamerica:
+  bu: apimulticanais
+
+enviroment: prd
+
+env:
+  - name: OS_ENV
+    value: prd
+  - name: TZ
+    value: America/Sao_Paulo
+  - name: APPDYNAMICS_TZ_APPLICATION
+    value: API-Restest
+
+custom:
+  quality:
+    maxsleep: 5
+    maxretry: 3
+    maxtimeout: 10
+  build:
+    snapshotversion: branchBuild
+    releaseversion: hashCommit
+  notify:
+    email: igorferreira.noorden@sulamerica.com.br
+
+provider:
+  name: openshift
+  namespace: restest-master
+  runtime: node:nginx-alpine
+  routes:
+    - domain: restest.paas.sulamerica.br
+      path: /
+    - domain: restest.paas.sulamerica.com.br
+      path: /

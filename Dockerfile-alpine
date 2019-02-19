@@ -1,0 +1,31 @@
+FROM node:8-alpine
+
+MAINTAINER igorferreira.noorden@sulamerica.com.br
+
+ENV \
+  HOME=/app \
+  PATH=/app/bin:/app/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:$PATH
+
+USER root
+
+RUN mkdir -p ${HOME}
+
+COPY . ${HOME}
+
+WORKDIR ${HOME}
+
+RUN set -x \
+    && apk update && apk upgrade \
+    && apk add --no-cache bash \
+    && apk add --no-cache \
+    && apk add -U apk-tools-static busybox-static && \
+    apk.static upgrade --no-self-upgrade -U -a \
+    && apk add curl
+
+RUN curl https://install.meteor.com/ | sh
+
+RUN meteor npm install
+
+EXPOSE 8080
+
+CMD npm start
